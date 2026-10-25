@@ -1,0 +1,26 @@
+seed: 7
+device: cpu
+output_dir: outputs/toy_smoke
+metadata:
+  dataset: generated-toy-images
+  status: software-verification-only
+  protocol: frozen-baseline-vs-ssl-vs-fine-tuning
+data:
+  train_manifest: data/toy/train.csv
+  val_manifest: data/toy/val.csv
+  test_manifest: data/toy/test.csv
+  image_size: 32
+model:
+  backbone: tiny
+  pretrained: false
+training:
+  batch_size: 8
+  num_workers: 0
+  ssl_epochs: 1
+  classifier_epochs: 2
+  ssl_learning_rate: 0.001
+  encoder_learning_rate: 0.0005
+  head_learning_rate: 0.01
+  weight_decay: 0.0001
+  projection_dim: 16
+  temperature: 0.2

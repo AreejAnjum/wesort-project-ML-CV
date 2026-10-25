@@ -1,0 +1,26 @@
+seed: 42
+device: auto
+output_dir: outputs/trashnet_vit
+metadata:
+  dataset: TrashNet
+  status: real-experiment
+  protocol: frozen-baseline-vs-ssl-vs-fine-tuning
+data:
+  train_manifest: data/manifests/train.csv
+  val_manifest: data/manifests/val.csv
+  test_manifest: data/manifests/test.csv
+  image_size: 224
+model:
+  backbone: vit_small_patch16_224
+  pretrained: true
+training:
+  batch_size: 32
+  num_workers: 4
+  ssl_epochs: 30
+  classifier_epochs: 20
+  ssl_learning_rate: 0.00005
+  encoder_learning_rate: 0.00001
+  head_learning_rate: 0.001
+  weight_decay: 0.0001
+  projection_dim: 128
+  temperature: 0.2
