@@ -1,9 +1,11 @@
-# WasteViT SSL pipeline
+# ZeroWaste-s SimCLR pipeline with MLflow
 
-Reproducible proof-of-concept for the THWS / WeSort.AI project. It compares a
-frozen pretrained encoder with the same encoder after SimCLR self-supervised
-domain adaptation. Every run, parameter, metric, checkpoint, dataset audit and
-test report is recorded in MLflow.
+This is a reproducible self-supervised learning experiment for the THWS /
+WeSort.AI project. It uses unlabeled ZeroWaste-s conveyor-belt images for SimCLR
+domain adaptation and MLflow for experiment tracking. The pipeline compares a
+frozen pretrained encoder with the same encoder after adaptation. Every run,
+parameter, metric, checkpoint, dataset audit, and test report is recorded in
+MLflow.
 
 ## Recommended experiment
 
