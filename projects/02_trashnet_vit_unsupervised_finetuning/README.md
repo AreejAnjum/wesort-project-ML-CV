@@ -13,6 +13,25 @@ update either Vision Transformer.
 Labels are used only to train the small evaluation classifiers and calculate
 test accuracy. They are never passed to MAE or DINOv2 during fine-tuning.
 
+## Repository structure
+
+```text
+02_trashnet_vit_unsupervised_finetuning/
+├── config/
+│   └── experiment.yaml       # documented experiment settings
+├── src/
+│   ├── __init__.py
+│   └── dataset.py            # discovery, stratified split, and label-free views
+├── scripts/
+│   └── prepare_trashnet.py   # optional manifest preparation helper
+├── ssl_vit.py                # features, MAE, and DINO command-line runner
+├── pyproject.toml
+└── README.md
+```
+
+The TrashNet images belong under `data/`, but datasets are intentionally not
+committed to GitHub because they are large external assets.
+
 ## Method
 
 TrashNet contains 2,527 images in six class folders. One fixed stratified split
@@ -47,9 +66,9 @@ data/dataset-resized/
 ## Task 1: frozen unsupervised ViT features
 
 ```bash
-python scripts/run_vit_experiments.py features --data data/dataset-resized \
+python ssl_vit.py features --data data/dataset-resized \
   --model facebook/dinov2-small --out outputs/dinov2_original
-python scripts/run_vit_experiments.py features --data data/dataset-resized \
+python ssl_vit.py features --data data/dataset-resized \
   --model facebook/vit-mae-base --out outputs/mae_original
 ```
 
@@ -59,9 +78,9 @@ readable summary.
 ## Task 2A: unsupervised MAE fine-tuning
 
 ```bash
-python scripts/run_vit_experiments.py mae --data data/dataset-resized \
+python ssl_vit.py mae --data data/dataset-resized \
   --epochs 20 --lr 5e-5 --out outputs/mae_adapted
-python scripts/run_vit_experiments.py features --data data/dataset-resized \
+python ssl_vit.py features --data data/dataset-resized \
   --model outputs/mae_adapted --out outputs/mae_adapted_evaluation
 ```
 
@@ -71,9 +90,9 @@ label is loaded by the training dataset.
 ## Task 2B: unsupervised DINOv2 fine-tuning
 
 ```bash
-python scripts/run_vit_experiments.py dino --data data/dataset-resized \
+python ssl_vit.py dino --data data/dataset-resized \
   --epochs 20 --lr 1e-5 --head-lr 1e-3 --out outputs/dinov2_adapted
-python scripts/run_vit_experiments.py features --data data/dataset-resized \
+python ssl_vit.py features --data data/dataset-resized \
   --model outputs/dinov2_adapted --out outputs/dinov2_adapted_evaluation
 ```
 

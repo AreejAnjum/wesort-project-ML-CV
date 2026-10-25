@@ -466,6 +466,31 @@ def cmd_dino(a):
     print("next: python ssl_vit.py features --data DATA --model", a.out, "--out res_dino_after")
 
 
+# Use the reusable dataset module exposed under src/. Keeping the command-line
+# entry point at repository root makes the experiment easy to run on Kaggle.
+from src.dataset import (
+    find_class_root,
+    list_images,
+    make_image_dataset,
+    make_multicrop_dataset,
+    stratified_split,
+)
+
+
+def make_dataset(paths, train_aug, size=224):
+    return make_image_dataset(paths, training=train_aug, size=size)
+
+
+def make_views_dataset(paths, n_local, size_global=224, size_local=98, color=0.4):
+    return make_multicrop_dataset(
+        paths,
+        local_crops=n_local,
+        global_size=size_global,
+        local_size=size_local,
+        color_strength=color,
+    )
+
+
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)

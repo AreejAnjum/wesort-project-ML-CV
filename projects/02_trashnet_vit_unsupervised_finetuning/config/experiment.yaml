@@ -1,0 +1,26 @@
+dataset:
+  root: data/dataset-resized
+  test_fraction: 0.20
+  split_seed: 0
+
+evaluation:
+  label_budgets: [1, 5, 10, 20, 50, 100]
+  repeats: 5
+  classifiers: [logistic_regression, cosine_knn]
+
+models:
+  dinov2: facebook/dinov2-small
+  mae: facebook/vit-mae-base
+
+mae_adaptation:
+  epochs: 20
+  batch_size: 64
+  learning_rate: 0.00005
+
+dino_adaptation:
+  epochs: 20
+  batch_size: 32
+  backbone_learning_rate: 0.00001
+  head_learning_rate: 0.001
+  local_crops: 6
+  prototypes: 4096
