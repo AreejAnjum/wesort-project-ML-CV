@@ -1,4 +1,4 @@
-# ZeroWaste-s SimCLR pipeline with MLflow
+# ZeroWaste-s self-supervised SimCLR pipeline with MLflow
 
 This is a reproducible self-supervised learning experiment for the THWS /
 WeSort.AI project. It uses unlabeled ZeroWaste-s conveyor-belt images for SimCLR
